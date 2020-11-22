@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "react-native-crm",
-    "slug": "react-native-crm",
+    "name": "react-native-employees-manager",
+    "slug": "react-native-employees-manager",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -27,6 +27,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    }, 
+    "extra":{
+      "facebook": {
+        "appId": "236207304511530"
+      }
     }
   }
 }
