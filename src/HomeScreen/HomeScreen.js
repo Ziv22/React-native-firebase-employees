@@ -1,39 +1,36 @@
 import * as React from 'react';
+import  ApiCalls from '../apiCalls'
 import {useState, useCallback} from 'react';
 import { View, Text, Button, ScrollView, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
 import { Card, Divider,Icon } from "react-native-elements"
 import { useFocusEffect, StackActions } from '@react-navigation/native';
 import axios from "axios"
 import styles from './styles';
-import updateEmployeeScreen from '../UpdateEmployeeScreen/UpdateEmployeeScreen';
 import { firebase } from '../../firebase/config'
-const addEmployeeUrl = `http://192.168.1.204:8080/employees`
 
+
+const apiCalls = new ApiCalls()
 
 function HomeScreen({navigation}) {
   const [employees, setEmployees] = useState([])
-
-  const fetchEmployees = async () => {
-    try {
-      const employees = await axios.get(addEmployeeUrl)
-      setEmployees(employees.data)
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
+  
   useFocusEffect(
     useCallback(() => {  
       fetchEmployees();
     }, [])
   );
 
+  const fetchEmployees = async () => {
+    const employeesData = await apiCalls.getEmployees()
+    setEmployees(employeesData)
+  };
+
+
   const deleteEmployee = async (id, name) =>{
-    const deleteEmployeeUrl = `http://192.168.1.204:8080/employee/${id}`
-    await axios.delete(deleteEmployeeUrl)
+    await apiCalls.deleteEmployee(id,name)
     await fetchEmployees()
-    alert(`deleted ${name}`)
   }
+
   const signOut = async () =>{
     firebase
       .auth()

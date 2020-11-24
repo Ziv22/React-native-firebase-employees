@@ -99,7 +99,6 @@ function LoginScreen({ navigation }) {
                     onChangeText={(text) => setEmail(text)}
                     value={email}
                     underlineColorAndroid="transparent"
-                    autoCapitalize="none"
                 />
                 <TextInput
                     style={styles.input}
@@ -109,7 +108,6 @@ function LoginScreen({ navigation }) {
                     onChangeText={(text) => setPassword(text)}
                     value={password}
                     underlineColorAndroid="transparent"
-                    autoCapitalize="none"
                 />
                 <TouchableOpacity
                     style={styles.button}

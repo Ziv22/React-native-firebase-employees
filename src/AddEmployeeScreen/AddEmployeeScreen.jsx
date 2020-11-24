@@ -27,7 +27,6 @@ function addEmployeeScreen({ navigation }) {
         <View>
           <Text style={styles.inputTitle}>Name</Text>
           <TextInput
-            autoCapitalize
             style={styles.input}
             placeholder={name}
             placeholderTextColor="#aaaaaa"
