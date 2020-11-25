@@ -1,9 +1,10 @@
 import * as React from 'react';
 import {useState} from 'react';
-import { View, Text, Button, TextInput,TouchableOpacity } from 'react-native';
-import { Card, Divider,Icon } from "react-native-elements"
+import { View, Text, TextInput,TouchableOpacity } from 'react-native';
+import { Card} from "react-native-elements"
 import styles from './styles';
-import axios from "axios"
+import  ApiCalls from '../apiCalls'
+const apiCalls = new ApiCalls()
 
 function updateEmployeeScreen({route,navigation}) {
   const [name, setName]               = useState(route.params.name),
@@ -11,19 +12,15 @@ function updateEmployeeScreen({route,navigation}) {
         [position, setPosition]       = useState(route.params.position),
         [phoneNumber, setPhoneNumber] = useState(route.params.phoneNumber),
         {id} = route.params
-        url = `http://192.168.1.204:8080/employee`
-
+        
   const updateEmployee = async () =>{
-    const employee = {
+    await apiCalls.updateEmployee({
       id,
       name,
       dateOfBirth,
       position,
       phoneNumber
-    }
-    console.log(route.params);
-
-    await axios.put(url ,employee)
+    })
     navigation.goBack()
   }
     return (

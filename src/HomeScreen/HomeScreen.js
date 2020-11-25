@@ -4,7 +4,6 @@ import {useState, useCallback} from 'react';
 import { View, Text, Button, ScrollView, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
 import { Card, Divider,Icon } from "react-native-elements"
 import { useFocusEffect, StackActions } from '@react-navigation/native';
-import axios from "axios"
 import styles from './styles';
 import { firebase } from '../../firebase/config'
 
@@ -28,7 +27,7 @@ function HomeScreen({navigation}) {
 
   const deleteEmployee = async (id, name) =>{
     await apiCalls.deleteEmployee(id,name)
-    await fetchEmployees()
+    fetchEmployees()
   }
 
   const signOut = async () =>{

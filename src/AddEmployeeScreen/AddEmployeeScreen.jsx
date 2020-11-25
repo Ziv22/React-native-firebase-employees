@@ -1,25 +1,23 @@
 import * as React from 'react';
 import {useState} from 'react';
-import { View, Text, Button, TextInput,TouchableOpacity } from 'react-native';
-import { Card, Divider,Icon } from "react-native-elements"
+import { View, Text, TextInput,TouchableOpacity } from 'react-native';
+import { Card } from "react-native-elements"
 import styles from './styles'
-import axios from "axios"
-
+import  ApiCalls from '../apiCalls'
+const apiCalls = new ApiCalls()
 function addEmployeeScreen({ navigation }) {
   const [name, setName]               = useState(''),
         [dateOfBirth, setDateOfBirth] = useState(''),
         [position, setPosition]       = useState(''),
-        [phoneNumber, setPhoneNumber] = useState(''),
-        addEmployeesUrl = `http://192.168.1.204:8080/employee`
+        [phoneNumber, setPhoneNumber] = useState('')
 
   const addEmployee = async () =>{
-    const employee = {
+    await apiCalls.addEmployee({
       name,
       dateOfBirth,
       position,
       phoneNumber
-    }
-    await axios.post(addEmployeesUrl ,employee)
+    })
     navigation.goBack()
   }
     return (

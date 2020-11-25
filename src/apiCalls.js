@@ -2,12 +2,11 @@ import axios from "axios"
 
 export default class ApiCalls {
     constructor(){
-        this.baseUrl = `http://192.168.1.204:8080/employees`
-
+        this.baseUrl = `http://192.168.1.204:8080/employee`
     }
     getEmployees = async function(){
         try {
-          const employees = await axios.get(this.baseUrl)
+          const employees = await axios.get(`${this.baseUrl}s`)
           return employees.data
         }
         catch(err) {
@@ -18,7 +17,7 @@ export default class ApiCalls {
 
     deleteEmployee = async function(id, name){
         try{
-            await axios.delete(`http://192.168.1.204:8080/employee/${id}`)
+            await axios.delete(`${this.baseUrl}/${id}`)
             alert(`deleted ${name}`)
         }
         catch(err){
@@ -27,23 +26,24 @@ export default class ApiCalls {
         }
     }
 
-    updateEmployee = async function( id, name, dateOfBirth, position, phoneNumber){    
-        // try{
-        //     await axios.put(baseUrl ,{ 
-        //         id,
-        //         name,
-        //         dateOfBirth,
-        //         position,
-        //         phoneNumber
-        //     })
-        //     navigation.goBack()
-        // }
-        // catch(err){
-        //     return err
-        // }
+    updateEmployee = async function(employee){    
+        try{
+            await axios.put(this.baseUrl , employee)
+            alert(`${employee.name} Updated Successfully`)
+        }
+        catch(err){
+            console.log(err);
+            return err
+        }
     }
-    // return { getEmployees,
-    //          deleteEmployee,
-    //          updateEmployee 
-    // }
+    addEmployee = async (employee) =>{
+        try{
+            await axios.post(this.baseUrl,employee)
+            alert(`${employee.name} was added Successfully`)
+        }
+        catch(err){
+            console.log(err);
+            return err
+        }
+    }
 }
