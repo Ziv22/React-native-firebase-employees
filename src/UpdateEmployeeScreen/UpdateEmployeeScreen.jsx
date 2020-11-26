@@ -1,8 +1,8 @@
-import * as React from 'react';
-import {useState} from 'react';
-import { View, Text, TextInput,TouchableOpacity } from 'react-native';
+import * as React from 'react'
+import {useState} from 'react'
+import { View, Text, TextInput,TouchableOpacity } from 'react-native'
 import { Card} from "react-native-elements"
-import styles from './styles';
+import styles from './styles'
 import  ApiCalls from '../apiCalls'
 const apiCalls = new ApiCalls()
 
@@ -12,17 +12,7 @@ function updateEmployeeScreen({route,navigation}) {
         [position, setPosition]       = useState(route.params.position),
         [phoneNumber, setPhoneNumber] = useState(route.params.phoneNumber),
         {id} = route.params
-        
-  const updateEmployee = async () =>{
-    await apiCalls.updateEmployee({
-      id,
-      name,
-      dateOfBirth,
-      position,
-      phoneNumber
-    })
-    navigation.goBack()
-  }
+  
     return (
       <Card style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <View>
@@ -68,11 +58,11 @@ function updateEmployeeScreen({route,navigation}) {
         </View>
         <TouchableOpacity
           style={styles.button}
-          onPress={updateEmployee}>
+          onPress={async () => await apiCalls.updateEmployee({ id, name, dateOfBirth, position, phoneNumber}, navigation)}>
           <Text style={styles.buttonTitle}>Save</Text>
         </TouchableOpacity>
       </Card>
-    );
+    )
   }
 
-  export default updateEmployeeScreen;
+  export default updateEmployeeScreen

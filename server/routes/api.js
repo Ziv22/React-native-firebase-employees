@@ -1,12 +1,12 @@
 const   express        = require("express"), 
         router         = express.Router(),
         admin          = require('firebase-admin'),
-        serviceAccount = require('../../firebase/serviceAccountKey.json');
+        serviceAccount = require('../../firebase/serviceAccountKey.json')
 
 admin.initializeApp({
 credential: admin.credential.cert(serviceAccount)
-});
-const db = admin.firestore();
+})
+const db = admin.firestore()
 
 router.get("/employees", async (req,res) =>{
 try{
@@ -38,7 +38,7 @@ router.put("/employee", async (req,res) =>{
 try{
     const employee = await db.collection('employees').doc(req.body.id)
     employee.update(req.body).then(() => {
-        console.log(`Updated ${req.body.id}`);
+        console.log(`Updated ${req.body.id}`)
         res.send()
     })
 }
@@ -49,7 +49,7 @@ catch(err){
 router.delete("/employee/:id", async (req,res) =>{
 try{
     const {id} = req.params
-    console.log(id);
+    console.log(id)
     await db.collection('employees')
             .doc(id)
             .delete()

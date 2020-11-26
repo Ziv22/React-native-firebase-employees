@@ -1,31 +1,33 @@
-import React, { useState} from 'react'
+import React, { useContext, useState} from 'react'
 import { Text, TextInput, TouchableOpacity, View } from 'react-native'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { firebase } from '../../firebase/config'
-import * as Facebook from 'expo-facebook';
-import styles from './styles';
+import * as Facebook from 'expo-facebook'
+import styles from './styles'
+import { UserContext } from '../UserContext'
 
 function LoginScreen({ navigation }) {
-    const [email, setEmail] = useState('')
+    const [email, setEmail] = useState('') 
     const [password, setPassword] = useState('')
+    const {user, setUser} = useContext(UserContext)
 
     const onFooterLinkPress = () => {
         navigation.navigate('RegisterScreen')
     }
-    const loginWithFacebook = async () => {
+    const loginWithFacebook = async () => {    
         try{
-            const appId = Expo.Constants.manifest.extra.facebook.appId;
+            const appId = Expo.Constants.manifest.extra.facebook.appId
             const appName = "react-native-employees-manager"
             
             await Facebook.initializeAsync({appId,appName})
             const permissions = ['public_profile', 'email']
             const { type, token  } = await Facebook.logInWithReadPermissionsAsync(
                 {permissions}
-            );
+            )
             switch (type) {
                 case 'success': {
                 await firebase.auth()
-                const credential = firebase.auth.FacebookAuthProvider.credential(token);
+                const credential = firebase.auth.FacebookAuthProvider.credential(token)
                 firebase
                     .auth()
                     .signInWithCredential(credential)
@@ -38,26 +40,27 @@ function LoginScreen({ navigation }) {
                         .then(firestoreDocument => {
                             if (!firestoreDocument.exists) {
                                 alert("User does not exist anymore.")
-                                return;
+                                return
                             }
                             const user = firestoreDocument.data()
+                            setUser(user)
                         })
                         .catch(error => {
                             alert(error)
-                        });
+                        })
                     })
                     .catch(err => {console.log(err.toString())})
                 
-                // return Promise.resolve({type: 'success'});
+                // return Promise.resolve({type: 'success'})
                 }
                 case 'cancel': {
-                return Promise.reject({type: 'cancel'});
+                return Promise.reject({type: 'cancel'})
                 }
             } 
         }
         catch(err){
-            console.log(err.toString());
-            alert(`Facebook Login Error: ${err}`);
+            console.log(err.toString())
+            alert(`Facebook Login Error: ${err}`)
         }
     }
 
@@ -74,13 +77,13 @@ function LoginScreen({ navigation }) {
                     .then(firestoreDocument => {
                         if (!firestoreDocument.exists) {
                             alert("User does not exist anymore.")
-                            return;
+                            return
                         }
                         const user = firestoreDocument.data()
                     })
                     .catch(error => {
                         alert(error)
-                    });
+                    })
             })
             .catch(error => {
                 alert(error)
@@ -127,4 +130,4 @@ function LoginScreen({ navigation }) {
     )
   }
 
-  export default LoginScreen;
+  export default LoginScreen

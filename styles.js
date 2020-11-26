@@ -1,9 +1,14 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center'
+    },
+    loading:{
+        flex: 1,
+        alignItems: 'center',
+        justifyContent:'center'
     },
     input: {
         height: 48,

@@ -1,37 +1,24 @@
-import React, { useState , useEffect} from 'react';
-import { View, Text, Button,TouchableOpacity } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import HomeScreen from './src/HomeScreen/HomeScreen';
-import AddEmployeeScreen from './src/AddEmployeeScreen/AddEmployeeScreen';
-import UpdateEmployeeScreen from './src/UpdateEmployeeScreen/UpdateEmployeeScreen';
-import LoginScreen from './src/LoginScreen/LoginScreen';
-import RegisterScreen from './src/RegisterScreen/RegisterScreen';
+import React, { useState , useEffect} from 'react'
+import { View, Text} from 'react-native'
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
 import { firebase } from './firebase/config'
-import styles from './styles';
+import { UserContext } from './src/UserContext'
+import HomeScreen from './src/HomeScreen/HomeScreen'
+import AddEmployeeScreen from './src/AddEmployeeScreen/AddEmployeeScreen'
+import UpdateEmployeeScreen from './src/UpdateEmployeeScreen/UpdateEmployeeScreen'
+import LoginScreen from './src/LoginScreen/LoginScreen'
+import RegisterScreen from './src/RegisterScreen/RegisterScreen'
+import styles from './styles'
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator()
 
 function App() {
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState(null)
 
-  const signOut = () =>{
-    firebase
-      .auth()
-      .signOut()
-      .then(() =>{
-        alert("Signed OUt!")
-        setUser(null)
-        console.log("Sign-out successful")
-      })
-      .catch(function(err) {
-        console.log(err)
-      });
-  }
-
   useEffect(() => {
-    const usersRef = firebase.firestore().collection('users');
+    const usersRef = firebase.firestore().collection('users')
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         usersRef
@@ -44,17 +31,17 @@ function App() {
           })
           .catch((error) => {
             setLoading(false)
-          });
+          })
       } else {
         setLoading(false)
       }
-    });
-  }, []);
+    })
+  }, [])
 
   if (loading) {
     return (
       <>
-        <View>
+        <View style={styles.loading}>
           <Text>Loading...</Text>
         </View>
       </>
@@ -62,7 +49,7 @@ function App() {
   }
 
   return (
-    <>
+    <UserContext.Provider value={{user, setUser}}>
       <NavigationContainer>
         <Stack.Navigator>
           <>
@@ -86,8 +73,8 @@ function App() {
           </>      
         </Stack.Navigator>
       </NavigationContainer>
-    </>
-  );
+    </UserContext.Provider>
+  )
 }
 
-export default App; 
+export default App
