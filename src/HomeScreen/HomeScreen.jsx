@@ -1,18 +1,15 @@
 import * as React from 'react'
-import  ApiCalls from '../apiCalls'
-import {useState, useCallback, useContext} from 'react'
+import {observer} from 'mobx-react'
+import {useCallback, useContext} from 'react'
 import { View, Text,ScrollView, TouchableOpacity, TouchableWithoutFeedback} from 'react-native'
 import { Card, Divider } from "react-native-elements"
 import { useFocusEffect} from '@react-navigation/native'
 import styles from './styles'
 import { firebase } from '../../firebase/config'
 import { UserContext } from '../UserContext'
-import { SignOut } from '../../firebase/SignOut'
 
-function HomeScreen({navigation}) {
-  const apiCalls = new ApiCalls()
-  const [employees, setEmployees] = useState([])
-  const {setUser} = useContext(UserContext)
+const HomeScreen = observer(({navigation}) => {
+  const {setUser, apiCalls, employeesStore} = useContext(UserContext)
   
   useFocusEffect(
     useCallback(() => {  
@@ -21,7 +18,7 @@ function HomeScreen({navigation}) {
     
   const fetchEmployees = async () => {
     const employeesData = await apiCalls.getEmployees()
-    setEmployees(employeesData)
+    employeesStore.setEmployees(employeesData)
   }
   
   const signOut = async () =>{
@@ -45,7 +42,7 @@ function HomeScreen({navigation}) {
       </TouchableOpacity>
 
       <ScrollView style={styles.scroll} >
-        {employees.length > 0 ? (employees.map((employee, i) => (
+        {employeesStore.employees.length > 0 ? (employeesStore.employees.map((employee, i) => (
           <Card key={i} id={employee.id} style={styles.card}>
             <TouchableWithoutFeedback onPress={() => navigation.navigate('UpdateEmployeeScreen',{...employee})}> 
               <View>
@@ -95,6 +92,6 @@ function HomeScreen({navigation}) {
 
     </View>
   )
-}
+})
 
 export default HomeScreen

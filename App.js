@@ -1,4 +1,4 @@
-import React, { useState , useEffect} from 'react'
+import React, { useState , useEffect, useContext} from 'react'
 import { View, Text} from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
@@ -9,9 +9,13 @@ import AddEmployeeScreen from './src/AddEmployeeScreen/AddEmployeeScreen'
 import UpdateEmployeeScreen from './src/UpdateEmployeeScreen/UpdateEmployeeScreen'
 import LoginScreen from './src/LoginScreen/LoginScreen'
 import RegisterScreen from './src/RegisterScreen/RegisterScreen'
+import ApiCalls from './src/apiCalls'
+import EmployeesStore from './src/EmployeesStore'
 import styles from './styles'
 
-const Stack = createStackNavigator()
+const Stack           = createStackNavigator()
+const apiCalls        = new ApiCalls()
+const employeesStore  = new EmployeesStore(apiCalls)
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -49,7 +53,7 @@ function App() {
   }
 
   return (
-    <UserContext.Provider value={{user, setUser}}>
+    <UserContext.Provider value={{user, setUser, apiCalls , employeesStore}}>
       <NavigationContainer>
         <Stack.Navigator>
           <>

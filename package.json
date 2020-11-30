@@ -21,6 +21,8 @@
     "firebase": "^8.0.2",
     "firebase-admin": "^9.4.1",
     "gitignore": "^0.6.0",
+    "mobx": "^6.0.4",
+    "mobx-react": "^7.0.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.4.tar.gz",
@@ -35,5 +37,10 @@
   "devDependencies": {
     "@babel/core": "~7.9.0"
   },
-  "private": true
+  "private": true,
+  "name": "react-native-employees-manager",
+  "version": "1.0.0",
+  "repository": "https://github.com/Ziv22/React-native-firebase-employees.git",
+  "author": "ziv221 <ziv.itzh@gmail.com>",
+  "license": "MIT"
 }

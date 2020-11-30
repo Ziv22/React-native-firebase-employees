@@ -1,12 +1,13 @@
 import * as React from 'react'
-import {useState} from 'react'
+import {useState , useContext} from 'react'
+import {observer} from 'mobx-react'
+import { UserContext } from '../UserContext'
 import { View, Text, TextInput,TouchableOpacity } from 'react-native'
 import { Card } from "react-native-elements"
 import styles from './styles'
-import  ApiCalls from '../apiCalls'
 
-function addEmployeeScreen({ navigation }) {
-  const apiCalls = new ApiCalls()
+const addEmployeeScreen = observer(({navigation}) => {
+  const {apiCalls} = useContext(UserContext)
   const [name, setName]               = useState(''),
         [dateOfBirth, setDateOfBirth] = useState(''),
         [position, setPosition]       = useState(''),
@@ -64,6 +65,6 @@ function addEmployeeScreen({ navigation }) {
         </TouchableOpacity>
       </Card>
     )
-  }
+  })
 
   export default addEmployeeScreen
