@@ -27,7 +27,6 @@ try{
              .add(req.body)
              .then((user) =>{
                 console.log(`Added User with id of ${user.id}`)
-                console.log(user.data());
                 res.send()
             })
 }
